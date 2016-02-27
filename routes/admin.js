@@ -9,11 +9,11 @@ router.all('*' , function (req, res, next) {
 });
 
 router.get('/', function (req, res) {
-    res.render('admin/index');
+    res.render('admin/index', {user: req.user});
 });
 
 router.get('/persons/:id', function (req, res) {
-    res.render('admin/persons');
+    res.render('admin/persons', req.user);
 });
 
 module.exports = router;
