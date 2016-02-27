@@ -1,3 +1,11 @@
+//get port for running app
+var port = process.argv[2];
+if (port == null) {
+    console.log("Please supply a PORT argument. E.g.   node app.js 80");
+    console.log("Exiting...");
+    process.exit(1);
+}
+
 //setup web app
 var express = require('express');
 var app = express();
@@ -76,6 +84,6 @@ app.use('/controllers', express.static(__dirname + '/controllers'));
 app.use('/res', express.static(__dirname + '/resources'));
 
 //start server
-app.listen(80, function () {
-  console.log('Listening on port 80');
+app.listen(port, function () {
+  console.log('Listening on port ' + port);
 });
