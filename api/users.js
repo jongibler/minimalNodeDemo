@@ -27,8 +27,6 @@ router.get('/:id', function(req, res){
 });
 
 router.post('/', function(req, res) {
-	console.log(req.body);
-
 	var user = new User();
 
 	//copy props by name
