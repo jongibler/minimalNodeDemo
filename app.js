@@ -50,22 +50,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.post('/login', passport.authenticate('local'), function(req, res) { res.send('login ok'); });
-app.get('/authTest',
-function(req, res) {
-  res.send(req.user);
-});
-
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
-});
-
-app.get('/loggedIn', function(req, res){
-  if (!req.user){
-    res.status('401').send();
-    return;
-  }
-  res.send();
 });
 
 //routes
@@ -73,7 +60,7 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 app.get('/persons', function (req, res) {
-  res.render('persons/index');
+  res.render('persons/index', {user: req.user});
 });
 
 app.use('/admin', require('./routes/admin.js'));
