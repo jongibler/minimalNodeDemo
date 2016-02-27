@@ -5,7 +5,7 @@ router.use(bodyParser.json());
 var Person = require('../models/Person.js');
 
 router.get('/', function(req, res) {
-	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Person Get All');
+	console.log(new Date(Date.now()).toLocaleString() + ' - ' + 'Api Person Get All');
 	Person.find(function(err, persons) {
 		if (err){
 			console.log(err);
@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Person Get ' + req.params.id);
+	console.log(new Date(Date.now()).toLocaleString() + ' - ' + 'Api Person Get ' + req.params.id);
 	Person.findById(req.params.id, function (err, person){
 		if (err){
 			console.log(err);
