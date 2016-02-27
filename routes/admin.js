@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/persons/:id', function (req, res) {
-    res.render('admin/persons', req.user);
+    res.render('admin/persons', {user: req.user});
 });
 
 module.exports = router;
