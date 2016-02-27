@@ -4,7 +4,31 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 var User = require('../models/User.js');
 
+router.get('/', function(req, res) {
+	User.find(function(err, allUsers) {
+		if (err){
+			console.log(err);
+			res.status(500).send(err);
+			return;
+		}
+		res.json(allUsers);
+	});
+});
+
+router.get('/:id', function(req, res){
+	User.findById(req.params.id, function (err, user){
+		if (err){
+			console.log(err);
+			res.status(500).send(err);
+			return;
+		}
+		res.json(user);
+	});
+});
+
 router.post('/', function(req, res) {
+	console.log(req.body);
+
 	var user = new User();
 
 	//copy props by name
