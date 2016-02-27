@@ -1,17 +1,12 @@
 <!doctype html>
 <html>
 <head>
-	<% include ../components/adminHeader %>
-	<script src="/controllers/adminIndex.js"></script>
-	<style>
-	.personTag{
-		margin-right: 2px;
-		margin-top:2px;
-	}
-	</style>
+	<% include ../../components/header %>
+
+	<script src="/controllers/persons/index.js"></script>
 </head>
-<body ng-app="adminIndex" ng-controller="AdminIndexController">
-	<% include ../components/adminNavbar %>
+<body ng-app="personsIndex" ng-controller="PersonsIndexController">
+	<% include ../../components/navbar %>
 
 	<div class="container">
 		<div class="bs-docs-section">
@@ -19,7 +14,6 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<h1>Persons</h1>
-						<h4><a href="admin/persons/new">Add New</a></h4>
 					</div>
 				</div>
 			</div>
@@ -33,7 +27,6 @@
 									<th>Name</th>
 									<th>Description</th>
 									<th>Tags</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -45,10 +38,10 @@
 											{{tag.text}}
 										</a>
 									</td>
-								 	<td><a href="admin/persons/{{person._id}}" class="btn btn-primary btn-sm btn-block">Edit</a></td>
 								</tr>
 							</tbody>
 						</table>
+						<div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
 
 					</div>
 

@@ -2,22 +2,22 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
-var Person = require('../models/Person.js')
+var Person = require('../models/Person.js');
 
 router.get('/', function(req, res) {
-	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Get All Person');
-	Person.find(function(err, allPersons) {
+	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Person Get All');
+	Person.find(function(err, persons) {
 		if (err){
 			console.log(err);
 			res.status(500).send(err);
 			return;
 		}
-		res.json(allPersons);
+		res.json(persons);
 	});
 });
 
 router.get('/:id', function(req, res){
-	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Get Person ' + req.params.id);
+	console.log(new Date(Date.now()).toDateString() + ' - ' + 'Api Person Get ' + req.params.id);
 	Person.findById(req.params.id, function (err, person){
 		if (err){
 			console.log(err);
@@ -30,7 +30,6 @@ router.get('/:id', function(req, res){
 
 router.post('/', function(req, res) {
 	var person = new Person();
-
 	//copy props by name
 	for(var k in req.body) person[k]=req.body[k];
 
@@ -42,17 +41,6 @@ router.post('/', function(req, res) {
 		res.json(result);
 	});
 
-	// var newPerson = new Person();
-	// for(var k in req.body) newPerson[k]=req.body[k];
-
-	// 	newPerson.save(function (err) {
-	// 		if (err) {
-	// 			console.log(err);
-	// 			res.status(500).send(err);
-	// 			return;
-	// 		}
-	// 		res.json(newPerson);
-	// 	});
 });
 
 router.delete('/:id', function(req, res) {
@@ -61,12 +49,12 @@ router.delete('/:id', function(req, res) {
 			res.status(500).send(err);
 			return;
 		}
-		Person.find(function(err, allPersons) {
+		Person.find(function(err, persons) {
 			if (err){
 				res.status(500).send(err);
 				return;
 			}
-			res.json(allPersons);
+			res.json(persons);
 		});
 	});
 });

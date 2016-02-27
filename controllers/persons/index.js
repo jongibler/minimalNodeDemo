@@ -1,7 +1,7 @@
 angular.module('personsIndex', [])
 .controller('PersonsIndexController', function($scope, $http, $location) {
-  
-	$http.get('/api/persons')
+
+	$http.get('/publicapi/persons')
 	.success(function(data){
 		$scope.allPersons = data;
 	})

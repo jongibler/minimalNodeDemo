@@ -4,8 +4,13 @@
   "main": "app.js",
   "dependencies": {
     "body-parser": "*",
+    "cookie-parser": "^1.4.1",
     "ejs": "*",
     "express": "*",
-    "mongoose": "*"
+    "express-session": "^1.13.0",
+    "mongoose": "*",
+    "passport": "^0.3.2",
+    "passport-json": "^1.2.0",
+    "passport-local": "^1.0.0"
   }
 }
