@@ -1,11 +1,11 @@
-angular.module('personsApp', ['ngTagsInput'])
-.controller('PersonsController', function($scope, $http, $timeout, $anchorScroll, $location, $document) {
+angular.module('adminPersons', ['ngTagsInput'])
+.controller('AdminPersonsController', function($scope, $http, $timeout, $anchorScroll, $location, $document) {
 
 	var personId = $location.absUrl().substr($location.absUrl().lastIndexOf('/') + 1);
 	$scope.isNewPerson = personId == 'new';
 
-	if (!$scope.isNewPerson){		
-		$http.get('/api/persons/' + personId) 
+	if (!$scope.isNewPerson){
+		$http.get('/api/persons/' + personId)
 		.then(function(res){
 			$scope.person = res.data;
 			if ($scope.person == null)
@@ -16,24 +16,24 @@ angular.module('personsApp', ['ngTagsInput'])
 		});
 	}
 
-	$scope.save = function(person){	
+	$scope.save = function(person){
 
 		if (!$scope.personForm.$valid){
 			return;
-		}		
+		}
 
 		$http.post('/api/persons', person)
-		.then(function(res){						
+		.then(function(res){
 			$scope.message="Person saved!";
 			$timeout(function(){$scope.message="";}, 2000);
-			$scope.clearForm();			
+			$scope.clearForm();
 		},function(res) {
 			console.log('Error:' + res.data);
 		});
 	};
 
 	$scope.clearForm = function(){
-		$scope.person = {};		
+		$scope.person = {};
 		$scope.personForm.$setPristine();
 		$scope.isNewPerson = true;
 		$anchorScroll();
@@ -55,7 +55,7 @@ angular.module('personsApp', ['ngTagsInput'])
 
 	$http.get('/api/persons')
 	.success(function(data){
-		$scope.allPersons = data;				
+		$scope.allPersons = data;
 	})
 	.error(function(data) {
 		console.log('Error:' + data);

@@ -1,35 +1,33 @@
 <!doctype html>
 <html>
 <head>
-	<% include ../../../components/adminHeader %>		
+	<% include ../../components/adminHeader %>
 
-	<script type="text/javascript" src="http://mbenford.github.io/ngTagsInput/js/ng-tags-input.min.js"></script> 
+	<script type="text/javascript" src="http://mbenford.github.io/ngTagsInput/js/ng-tags-input.min.js"></script>
 	<link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css">
-	<link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.bootstrap.min.css">	
+	<link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.bootstrap.min.css">
 
 	<script type="text/javascript" src="http://schlogen.github.io/angular-confirm/javascripts/angular-confirm.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script>
 
-
-	<script src="/controllers/persons.js" type="text/javascript"></script>
+	<script src="/controllers/adminPersons.js" type="text/javascript"></script>	
 </head>
-<body ng-app="personsApp" ng-controller="PersonsController">
-	<% include ../../../components/adminNavbar %>
+<body ng-app="adminPersons" ng-controller="AdminPersonsController">
+	<% include ../../components/adminNavbar %>
 
 	<div class="container">
 		<div class="bs-docs-section">
 			<div class="page-header">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1>{{isNewPerson ? 'Add' : 'Edit'}} Person</h1>						
+						<h1>{{isNewPerson ? 'Add' : 'Edit'}} Person</h1>
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="well bs-component">
-
 
 						<form name="personForm" class="form-horizontal">
 							<fieldset>
@@ -55,7 +53,7 @@
 									<div class="col-lg-8">
 										<input type="number" ng-model="person.age" class="form-control" id="txtAge">
 									</div>
-								</div>								
+								</div>
 								<div class="form-group">
 									<label for="txtDescription" class="col-lg-2 control-label">Description</label>
 									<div class="col-lg-8">
@@ -63,7 +61,7 @@
 										<span class="help-block">Brief including person's habilities.</span>
 									</div>
 								</div>
-								<div class="form-group">										
+								<div class="form-group">
 									<label for="txtTags" class="col-lg-2 control-label">Tags</label>
 									<div class="col-lg-8">
 										<tags-input ng-model="person.tags" id="txtTags" min-length="1"></tags-input>
@@ -74,7 +72,7 @@
 									<div class="col-lg-8 col-lg-offset-2">
 										<a href="/admin" class="btn btn-default">Cancel</a>
 										<button type="submit" ng-click="save(person)" class="btn btn-primary">Save</button>
-										<button ng-show="!isNewPerson" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger pull-right" >
+										<button ng-show="!isNewPerson" type="button" data-toggle="modal" data-target="#modalDelete" class="btn btn-danger pull-right" >
 											Delete
 										</button>
 									</div>
@@ -89,11 +87,9 @@
 		</div>
 	</div>
 
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
+	<!-- Modal Delete confirm -->
+	<div id="modalDelete" class="modal fade" role="dialog">
 		<div class="modal-dialog">
-
-			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -107,11 +103,8 @@
 					<button type="button" ng-click="delete()" class="btn btn-primary" data-dismiss="modal">Yes</button>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
 </body>
-
 </html>
-

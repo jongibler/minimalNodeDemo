@@ -11,15 +11,14 @@ mongoose.connect('mongodb://dbuser:dbpassword@ds047114.mongolab.com:47114/experi
 app.get('/', function (req, res) {
   res.render('index');
 });
-
 app.get('/persons', function (req, res) {
-  res.render('persons');
+  res.render('personsIndex');
 });
 app.get('/admin', function (req, res) {
-  res.render('admin');
+  res.render('adminIndex');
 });
-app.get('/admin/persons/edit/:id', function (req, res) {
-  res.render('admin/persons/edit');
+app.get('/admin/persons/:id', function (req, res) {
+  res.render('admin/persons');
 });
 
 app.use('/api/persons', require('./api/persons.js'));
@@ -30,4 +29,3 @@ app.use('/res', express.static(__dirname + '/resources'));
 app.listen(80, function () {
   console.log('Listening on port 80');
 });
-
