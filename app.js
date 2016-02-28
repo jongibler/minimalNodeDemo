@@ -10,8 +10,8 @@ if (port == null) {
 var express = require('express');
 var app = express();
 app.set('view engine', 'ejs');
-
-//setup db
+var multer = require('multer');
+var s3 = require('multer-s3');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://dbuser:dbpassword@ds047114.mongolab.com:47114/experimental');
 
@@ -54,6 +54,33 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+
+//upload test
+var upload = multer({
+  storage: s3({
+    dirname: 'demo',
+    bucket: 'minimalnode',
+    secretAccessKey: 'HZlvmyVxIykwlyvfqZouSG2Dh0t0QBRZsLnTe2Kg',
+    accessKeyId: 'AKIAJ5OLJIYHQLBPSA2A',
+    region: 'eu-west-1',
+    filename: function (req, file, cb) {
+      cb(null, Date.now())
+    }
+  })
+})
+
+app.get('/upload', function (req, res) {
+    res.status(200)
+        .send('<form method="POST" enctype="multipart/form-data">'
+            + '<input type="file" name="file"/><input type="submit"/>'
+            + '</form>');
+})
+
+app.post('/upload', upload.single('file'), function(req, res, next){
+  res.send('Successfully uploaded!');
+});
+
+
 
 //routes
 app.get('/', function (req, res) {

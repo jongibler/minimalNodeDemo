@@ -9,6 +9,8 @@
     "express": "*",
     "express-session": "^1.13.0",
     "mongoose": "*",
+    "multer": "^1.1.0",
+    "multer-s3": "^1.4.1",
     "passport": "^0.3.2",
     "passport-json": "^1.2.0",
     "passport-local": "^1.0.0"
