@@ -55,6 +55,8 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+var mime = require('mime');
+
 //upload test
 var upload = multer({
   storage: s3({
@@ -63,8 +65,11 @@ var upload = multer({
     secretAccessKey: 'HZlvmyVxIykwlyvfqZouSG2Dh0t0QBRZsLnTe2Kg',
     accessKeyId: 'AKIAJ5OLJIYHQLBPSA2A',
     region: 'eu-west-1',
+    contentType: s3.AUTO_CONTENT_TYPE,
     filename: function (req, file, cb) {
-      cb(null, Date.now())
+      var fileName = Date.now()+'.' + mime.extension(file.mimetype);
+      cb(null, fileName);
+      req.resultingFilename = fileName;
     }
   })
 })
@@ -77,7 +82,9 @@ app.get('/upload', function (req, res) {
 })
 
 app.post('/upload', upload.single('file'), function(req, res, next){
-  res.send('Successfully uploaded!');
+  var baseUrl = 'http://s3-eu-west-1.amazonaws.com/minimalnode/demo/';
+  var fileUrl = baseUrl+req.resultingFilename;
+  res.send('Successfully uploaded!<br /><a href="'+fileUrl+'">'+fileUrl+'</a>');
 });
 
 
