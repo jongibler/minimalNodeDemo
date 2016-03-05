@@ -1,4 +1,20 @@
 angular.module('adminPersons', ['ngTagsInput'])
+//todo refactor file upload directive/service out of here
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
 .controller('AdminPersonsController', function($scope, $http, $timeout, $anchorScroll, $location, $document) {
 
 	var personId = $location.absUrl().substr($location.absUrl().lastIndexOf('/') + 1);
@@ -51,8 +67,6 @@ angular.module('adminPersons', ['ngTagsInput'])
 		});
 	};
 
-
-
 	$http.get('/api/persons')
 	.success(function(data){
 		$scope.allPersons = data;
@@ -61,5 +75,22 @@ angular.module('adminPersons', ['ngTagsInput'])
 		console.log('Error:' + data);
 	});
 
+	$scope.uploadPDF = function(){
+		var file = $scope.pdfFile;
+		var uploadUrl = "/uploadPDF";
+		var fd = new FormData();
+		fd.append('file', file);
+		$http.post(uploadUrl, fd, {
+				transformRequest: angular.identity,
+				headers: {'Content-Type': undefined}
+		})
+		.success(function(data){
+			$scope.uploadedPDFUrl = data;
+			console.log('uploaded ' + data);
+		})
+		.error(function(err){
+			console.log(err);
+		});
+	};
 
 });
