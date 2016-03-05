@@ -20,6 +20,7 @@ var upload = multer({
   }),
   fileFilter: function (req, file, cb) {
     if (!file.originalname.endsWith('.pdf')) {
+      console.log('tried to upload invalid file name: ' + file.originalname);
       return cb(new Error('Only pdfs are allowed'))
     }
     //TODO: additional security to validate it is actually a pdf
@@ -39,5 +40,6 @@ app.get('/uploadPDF', function (req, res) {
 app.post('/uploadPDF', upload.single('file'), function(req, res, next){
   var baseUrl = 'http://s3-eu-west-1.amazonaws.com/minimalnode/demo/';
   var fileUrl = baseUrl+req.resultingFilename;
+  console.log('succesfully uploaded ' + fileUrl);
   res.send(fileUrl);
 });
