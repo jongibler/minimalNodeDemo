@@ -5,5 +5,6 @@ module.exports = mongoose.model('Person', {
 	lastName : String,
 	age : Number,
 	description: String,
-	tags : Array
+	tags : Array,
+	uploadedPDFUrl : String
 });

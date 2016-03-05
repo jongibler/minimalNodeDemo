@@ -30,14 +30,19 @@ var upload = multer({
 })
 
 //example upload form:
-app.get('/uploadPDF', function (req, res) {
-    res.status(200)
-        .send('<form method="POST" enctype="multipart/form-data">'
-            + '<input type="file" name="file"/><input type="submit"/>'
-            + '</form>');
-})
+// app.get('/uploadPDF', function (req, res) {
+//     res.status(200)
+//         .send('<form method="POST" enctype="multipart/form-data">'
+//             + '<input type="file" name="file"/><input type="submit"/>'
+//             + '</form>');
+// })
 
 app.post('/uploadPDF', upload.single('file'), function(req, res, next){
+  if (!req.user){
+    res.status(401).send('Unauthorized');
+    return;
+  }   
+
   var baseUrl = 'http://s3-eu-west-1.amazonaws.com/minimalnode/demo/';
   var fileUrl = baseUrl+req.resultingFilename;
   console.log('succesfully uploaded ' + fileUrl);

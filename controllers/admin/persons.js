@@ -52,7 +52,10 @@ angular.module('adminPersons', ['ngTagsInput'])
 		$scope.person = {};
 		$scope.personForm.$setPristine();
 		$scope.isNewPerson = true;
-		$anchorScroll();
+
+    clearFileInputValue();
+
+    $anchorScroll();
 	};
 
 	$scope.delete = function() {
@@ -76,6 +79,9 @@ angular.module('adminPersons', ['ngTagsInput'])
 	});
 
 	$scope.uploadPDF = function(){
+    if ($scope.pdfFile == undefined) {
+      return;
+    }
 		var file = $scope.pdfFile;
 		var uploadUrl = "/uploadPDF";
 		var fd = new FormData();
@@ -85,12 +91,24 @@ angular.module('adminPersons', ['ngTagsInput'])
 				headers: {'Content-Type': undefined}
 		})
 		.success(function(data){
-			$scope.uploadedPDFUrl = data;
-			console.log('uploaded ' + data);
+			$scope.person.uploadedPDFUrl = data;
 		})
 		.error(function(err){
 			console.log(err);
 		});
 	};
+
+  $scope.clearPDF = function(){    
+    $scope.pdfFile = undefined;
+    $scope.person.uploadedPDFUrl = "";
+    clearFileInputValue();
+
+    //TODO: Delete uploaded preview file from s3
+  };
+
+  function clearFileInputValue(){
+    //TODO: two way binding of input file
+    $('input:file').val('');
+  };
 
 });
