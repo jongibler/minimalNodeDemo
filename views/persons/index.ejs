@@ -3,54 +3,74 @@
 <head>
 	<% include ../../components/header %>
 
+	<link rel="stylesheet" href="/res/jqcloud.min.css">
+
 	<script src="/controllers/persons/index.js"></script>
+	<script src="/res/angular-jqcloud.js"></script>
+	<script src="/res/jqcloud.min.js"></script>
+
 </head>
 <body ng-app="personsIndex" ng-controller="PersonsIndexController">
 	<% include ../../components/navbar %>
 
 	<div class="container">
-		<div class="bs-docs-section">
-			<div class="page-header">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1>Persons</h1>
-					</div>
-				</div>
-			</div>
 
+		<div class="page-header">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="bs-component">
-						<table class="table table-striped table-hover ">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Tags</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="person in allPersons">
-									<td>
-										<a href="" ng-click="personClicked(person)" data-toggle="modal" data-target="#modalViewPDF">
-											{{person.firstName}} {{person.lastName}}
-										</a>
-									</td>
-									<td>{{person.description}}</td>
-									<td>
-										<a class="btn btn-info btn-xs personTag" ng-repeat="tag in person.tags">
-											{{tag.text}}
-										</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div></div>
-
-					</div>
-
+					<h1>Persons</h1>
 				</div>
 			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<table class="table table-striped table-hover ">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Tags</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="person in allPersons">
+							<td>
+								<a href="" ng-click="personClicked(person)" data-toggle="modal" data-target="#modalViewPDF">
+									{{person.firstName}} {{person.lastName}}
+								</a>
+							</td>
+							<td>{{person.description}}</td>
+							<td>
+								<a class="btn btn-info btn-xs personTag" ng-repeat="tag in person.tags">
+									{{tag.text}}
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Tags</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<p>
+					Click on a tag to search for persons...
+				</p>
+				<jqcloud words="words" width="500" height="350" steps="7"></jqcloud>
+			</div>
+
 		</div>
 	</div>
 
@@ -73,11 +93,11 @@
 					</p>
 				</div>
 				<div class="modal-body" ng-show="clickedPerson.uploadedPDFUrl">
-						<p>The person uploaded this PDF:</p>
-						<object style="width:100%;height:100%;" data="{{clickedPerson.uploadedPDFUrl}}" type="application/pdf">
-							<p><em>Sorry, your browser does not support PDF preview.</em></p>
-							<p><a href="{{clickedPerson.uploadedPDFUrl}}" target="_blank">Open in separate window</a></p>
-						</object>
+					<p>The person uploaded this PDF:</p>
+					<object style="width:100%;height:100%;" data="{{clickedPerson.uploadedPDFUrl}}" type="application/pdf">
+						<p><em>Sorry, your browser does not support PDF preview.</em></p>
+						<p><a href="{{clickedPerson.uploadedPDFUrl}}" target="_blank">Open in separate window</a></p>
+					</object>
 				</div>
 				<div class="modal-footer">
 					<a ng-show="clickedPerson.uploadedPDFUrl" class="pull-left" href="{{clickedPerson.uploadedPDFUrl}}" target="_blank">Download PDF</a>

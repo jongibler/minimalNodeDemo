@@ -18,6 +18,13 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res){
 	console.log(new Date(Date.now()).toLocaleString() + ' - ' + 'Api Person Get ' + req.params.id);
+
+	if (req.params.id == "getTagsCount")
+	{
+		getTagsCount(function(tagsCount){res.json(tagsCount)});
+		return;
+	}
+
 	Person.findById(req.params.id, function (err, person){
 		if (err){
 			console.log(err);
@@ -58,5 +65,23 @@ router.delete('/:id', function(req, res) {
 		});
 	});
 });
+
+function getTagsCount(cb){
+	var tagCounts = null;
+	Person.aggregate([
+		{ $project: { tags: 1 } },
+		{ $unwind: "$tags" },
+		{ $group: {
+			_id: "$tags",
+			count: { $sum : 1 }
+		}}],
+		function (err, result) {
+			if (err) {
+				console.log(err);
+				return;
+			}
+			cb(result);
+		});	
+};
 
 module.exports = router;
