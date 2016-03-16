@@ -8,4 +8,10 @@ angular.module('personsIndex', [])
 	.error(function(data) {
 		console.log('Error:' + data);
 	});
+
+	$scope.personClicked = function(person) {
+		console.log(person);
+		$scope.clickedPerson = person;
+	}
+
 });
