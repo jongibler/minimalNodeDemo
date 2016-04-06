@@ -1,9 +1,8 @@
 //get port for running app
 var port = process.argv[2];
 if (port == null) {
-    console.log("Please supply a PORT argument. E.g.   node app.js 80");
-    console.log("Exiting...");
-    process.exit(1);
+    console.log("Using default port (80). For other ports use: app.js [PORT] ");
+    port = 80;
 }
 
 //setup web app
@@ -18,6 +17,7 @@ mongoose.connect('mongodb://dbuser:dbpassword@ds047114.mongolab.com:47114/experi
 //internal modules
 require('./authentication.js');
 require('./pdfUploader.js');
+var emailSender = require('./emailSender.js');
 
 //routes
 app.get('/', function (req, res) {
@@ -43,3 +43,16 @@ app.use(function(err, req, res, next) {
 app.listen(port, function () {
   console.log('Listening on port ' + port);
 });
+
+
+// ------------------------------------------------------------------------
+//test stuff...
+// var emailSender = require('./emailSender.js');
+// var mailOptions = {
+//     from: '"Minimal Node WebApp" <minimalnode@gmail.com>', // sender address
+//     to: 'jgibler@gmail.com', // list of receivers
+//     subject: 'Hello World', // Subject line
+//     text: 'Hello world 🐴', // plaintext body
+//     html: '<b>Hello world 🐴</b>' // html body
+// };
+// emailSender.sendMail(mailOptions);
